@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     'property.apps.PropertyConfig',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
