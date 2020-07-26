@@ -29,6 +29,7 @@ class Flat(models.Model):
     construction_year = models.IntegerField(verbose_name="Год постройки здания", null=True, blank=True, db_index=True)
 
     new_building = models.NullBooleanField(verbose_name="Новостройка", db_index=True)
+    likes = models.ManyToManyField(verbose_name="Кто лайкнул", to=User, blank=True, related_name="liked_flats")
 
     def __str__(self):
         return f"{self.town}, {self.address} ({self.price}р.)"
@@ -36,12 +37,12 @@ class Flat(models.Model):
 
 class Complaint(models.Model):
     # Cascading deletion of a complaint when deleting a user under the assumption that we only delete bots or haters
-    user = models.ForeignKey(verbose_name="Кто жаловался", to=User, on_delete=models.CASCADE, related_name='complaints')
+    user = models.ForeignKey(verbose_name="Кто жаловался", to=User, on_delete=models.CASCADE, related_name="complaints")
     flat = models.ForeignKey(
         verbose_name="Квартира, на которую пожаловались",
         to=Flat,
         on_delete=models.CASCADE,
-        related_name='complaints'
+        related_name="complaints"
     )
     description = models.TextField(verbose_name="Текст жалобы")
 
